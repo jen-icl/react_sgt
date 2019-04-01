@@ -2,35 +2,34 @@ import 'materialize-css/dist/css/materialize.min.css';
 import 'materialize-css/dist/js/materialize.min';
 import '../assets/css/app.scss';
 import React, {Component} from 'react';
+import axios from 'axios';
 import AddStudent from './add_student';
 import StudentTable from './students_table';
-import studentData from '../dummy_data/student_list';
-
-let id = 100;
 
 class App extends Component{
     state = {
-        students: []
+        students: [],
+        error: ''
     }
 
-    addStudent = (student) => {
-        student.id = id++;
-        this.setState({
-            students: [...this.state.students, student]
-        });
-    }
-
-    deleteStudent = (id) => {
-        const studentsCopy = this.state.students.slice();
-        const index = studentsCopy.findIndex((student) => {
-            return student.id === id;
-        });
-        if(index >= 0){
-            studentsCopy.splice(index, 1);
+    addStudent = async (student) => {
+        try {
+        await axios.post('/api/grades', student)
+        this.getStudentData();
+        } catch(err){
             this.setState({
-                students: [...studentsCopy]
+                error:'Error adding student data'
             });
-            console.log(this.state)
+        }
+    }
+
+    deleteStudent = async (id) => {
+        try {
+        await axios.delete(`/api/grades/${id}`);
+        } catch(err){
+            this.setState({
+                error:'Error deleting student data'
+            });
         }
     }
 
@@ -38,10 +37,30 @@ class App extends Component{
         this.getStudentData();
     }
 
-    getStudentData(){
-        //call server here
+    async getStudentData(){
+        try {
+        const resp = await axios.get('/api/grades');
         this.setState({
-            students: studentData
+            students: resp.data.data
+        });
+        } catch(err){
+            this.setState({
+                error:'Error retrieving student data'
+            });
+        }
+    }
+
+    readStudentData(){
+        axios.get('http://localhost:3001/api/grades').then((resp) => {
+            console.log('server response', resp);
+            this.setState({
+                students: resp.data.data
+            });
+        }).catch((err) => {
+            console.log('error getting student data', err.message);
+            this.setState({
+                error: 'Error retrieving student data'
+            });
         });
     }
 
@@ -49,6 +68,7 @@ class App extends Component{
         return (
             <div>
                 <h1 className="center">React SGT</h1>
+                <h5 className="red-text text-darken-2">{this.state.error}</h5>
                 <div className="row">
                     <StudentTable col="s12 m8" delete={this.deleteStudent} list={this.state.students}/>
                     <AddStudent col="s12 m4" add={this.addStudent}/>
