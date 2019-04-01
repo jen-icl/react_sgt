@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Student Grade Table built with ReactJS",
   "main": "index.js",
+  "proxy": {
+    "/api/*": {
+      "target": "http://localhost:3001"
+    }
+  },
   "scripts": {
     "start": "node dev_server.js",
     "bundle": "webpack --config webpack.prod.js --progress",
@@ -15,6 +20,7 @@
     "url": "https://github.com/jen-icl/react_sgt.git"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "materialize-css": "^1.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
