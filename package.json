@@ -1,7 +1,7 @@
 {
-  "name": "react_sgt",
+  "name": "grocery_list",
   "version": "1.0.0",
-  "description": "Student Grade Table built with ReactJS",
+  "description": "Grocery List built with ReactJS and node.js",
   "main": "index.js",
   "proxy": {
     "/api/*": {
@@ -13,11 +13,11 @@
     "bundle": "webpack --config webpack.prod.js --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "I Chun Lai",
+  "author": "Jennifer Lai",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jen-icl/react_sgt.git"
+    "url": "https://github.com/jen-icl/grocery_list.git"
   },
   "dependencies": {
     "axios": "^0.18.0",
