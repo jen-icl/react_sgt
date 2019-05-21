@@ -16,7 +16,7 @@ const server = express();
 
 //middleware
 server.use(cors());
-server.use( express.static( __dirname + '/html' ) );
+server.use(express.static(__dirname + '../'));
 server.use(express.urlencoded( {extended: false}) ); //have express pull body data that is urlencoded and place it into an object called "body"
 server.use(express.json()); // used for things like axios
 
