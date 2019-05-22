@@ -9,12 +9,20 @@ import GroceryTable from './grocery_table';
 import GroceryList from '../dummy_data/grocery_list';
 
 class App extends Component{
-    state = {
-        groceries: [],
-        error: ''
+    constructor(props){
+        super(props);
+
+        this.state = {
+            groceries: [],
+            error: ''
+        }
+
+        this.addGrocery = this.addGrocery.bind(this);
+        this.deleteGrocery = this.deleteGrocery.bind(this);
     }
 
-    addGrocery = async (grocery) => {
+
+    async addGrocery(grocery){
         grocery.unit_price = parseInt(grocery.unit_price * 100);
         // try {
         // await axios.post('/api/groceryList', grocery)
@@ -26,7 +34,8 @@ class App extends Component{
         // }
     }
 
-    deleteGrocery = async (id) => {
+    async deleteGrocery(id){
+        console.log('delete clicked')
         // try {
         // await axios.delete(`/api/groceryList/${id}`);
         // } catch(err){
@@ -55,20 +64,6 @@ class App extends Component{
         //     });
         // }
     }
-
-    // readGroceryData(){
-    //     axios.get('http://localhost:3001/api/groceryList').then((resp) => {
-    //         console.log('server response', resp);
-    //         this.setState({
-    //             groceries: resp.data.data
-    //         });
-    //     }).catch((err) => {
-    //         console.log('error getting grocery data', err.message);
-    //         this.setState({
-    //             error: 'Error retrieving grocery data'
-    //         });
-    //     });
-    // }
 
     render(){
         return (
