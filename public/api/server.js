@@ -26,43 +26,36 @@ server.get('/api/groceries', (req, res) => {
                 output.error = error;
             }
 
-            res.send( output );
+            res.send(output);
         });
     });
 });
 
+server.post('/api/groceries', (req, res) => {
+    console.log('see this', req.body)
+    const {item, store, unit_price, unit} = req.body;
+    const output = {
+        success: false,
+    };
 
-//by default browser does get requests
-//create post endpoint, to handle adding students
-server.post('/api/grades', (request, response) => { //file path always starts with '/'
-   //check body object and see if any data was not sent
-    if(request.body.name === undefined || request.body.course === undefined || request.body.grade === undefined){
-        //respond to the client with an appropriate error message
-        response.send({
-            success: false,
-            error: 'invalid name, course, or grade'
-        });
-        //return undefined and exit out of function
+    if (item === undefined || store === undefined || unit_price === undefined || unit === undefined){
+        output.error = 'Invalid item, store, unit_price, or unit';
+        res.send(output);
         return;
     }
-    //connect to the database
-    db.connect( () => {
-        const name = request.body.name.split(" "); //returns array of [givenname, surname]
-        //create a hardcoded one and test in phpMyAdmin first
-        const query = 'INSERT INTO `grades` SET `surname`="'+name[1]+'", `givenname`="'+name[0]+'", `course`="'+request.body.course+'", `grade`='+request.body.grade+', `added`=NOW()';
-        //'INSERT INTO  `grades` (`surname`,`givenname`,`course`,`grades`,`added`) VALUES ("Lai","Jen","math",80,NOW()), ("Paschal","Dan","math",90,NOW())'
+
+    db.connect(() => {
+        const query = 'INSERT INTO `grocery` SET `completed` = 0, `item`="' + item + '", `store`="' + store + '", `unit_price`="' + unit_price + '", `unit`="' + unit + '", `added`=NOW()';
+
         db.query(query, (error, result) => {
             if(!error){
-                response.send({
-                    success: true,
-                    new_id: result.insertId //can console.log(result) to see the OkPacket that returns from the query
-                })
+                output.success = true;
+                output.new_id = result.insertId;
             } else {
-                response.send({
-                    success: false,
-                    error //ES6 structuring shortcut for error: error -> error
-                });
+                output.error = error;
             }
+
+            res.send(output);
         });
     });
 });
