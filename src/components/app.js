@@ -3,75 +3,81 @@ import 'materialize-css/dist/js/materialize.min';
 import '../assets/css/app.scss';
 import React, {Component} from 'react';
 import axios from 'axios';
-import AddStudent from './add_student';
-import StudentTable from './students_table';
+import AddGrocery from './add_grocery';
+import GroceryTable from './grocery_table';
+
+import GroceryList from '../dummy_data/grocery_list';
 
 class App extends Component{
     state = {
-        students: [],
+        groceries: [],
         error: ''
     }
 
-    addStudent = async (student) => {
-        try {
-        await axios.post('/api/grades', student)
-        this.getStudentData();
-        } catch(err){
-            this.setState({
-                error:'Error adding student data'
-            });
-        }
+    addGrocery = async (grocery) => {
+        grocery.unit_price = parseInt(grocery.unit_price * 100);
+        // try {
+        // await axios.post('/api/groceryList', grocery)
+        // this.getGroceryData();
+        // } catch(err){
+        //     this.setState({
+        //         error:'Error adding grocery data'
+        //     });
+        // }
     }
 
-    deleteStudent = async (id) => {
-        try {
-        await axios.delete(`/api/grades/${id}`);
-        } catch(err){
-            this.setState({
-                error:'Error deleting student data'
-            });
-        }
+    deleteGrocery = async (id) => {
+        // try {
+        // await axios.delete(`/api/groceryList/${id}`);
+        // } catch(err){
+        //     this.setState({
+        //         error:'Error deleting grocery data'
+        //     });
+        // }
     }
 
     componentDidMount(){
-        this.getStudentData();
+        this.getGroceryData();
     }
 
-    async getStudentData(){
-        try {
-        const resp = await axios.get('/api/grades');
+    /* async */ getGroceryData(){
         this.setState({
-            students: resp.data.data
+            groceries: GroceryList
         });
-        } catch(err){
-            this.setState({
-                error:'Error retrieving student data'
-            });
-        }
+        // try {
+        // const resp = await axios.get('/api/groceryList');
+        // this.setState({
+        //     groceries: resp.data.data
+        // });
+        // } catch(err){
+        //     this.setState({
+        //         error:'Error retrieving grocery data'
+        //     });
+        // }
     }
 
-    readStudentData(){
-        axios.get('http://localhost:3001/api/grades').then((resp) => {
-            console.log('server response', resp);
-            this.setState({
-                students: resp.data.data
-            });
-        }).catch((err) => {
-            console.log('error getting student data', err.message);
-            this.setState({
-                error: 'Error retrieving student data'
-            });
-        });
-    }
+    // readGroceryData(){
+    //     axios.get('http://localhost:3001/api/groceryList').then((resp) => {
+    //         console.log('server response', resp);
+    //         this.setState({
+    //             groceries: resp.data.data
+    //         });
+    //     }).catch((err) => {
+    //         console.log('error getting grocery data', err.message);
+    //         this.setState({
+    //             error: 'Error retrieving grocery data'
+    //         });
+    //     });
+    // }
 
     render(){
         return (
             <div>
-                <h1 className="center">React SGT</h1>
+                <h1 className="center">Grocery List</h1>
                 <h5 className="red-text text-darken-2">{this.state.error}</h5>
                 <div className="row">
-                    <StudentTable col="s12 m8" delete={this.deleteStudent} list={this.state.students}/>
-                    <AddStudent col="s12 m4" add={this.addStudent}/>
+                    <GroceryTable col="s12 m8" delete={this.deleteGrocery} list={this.state.groceries}/>
+                    <AddGrocery col="s12 m4" add={this.addGrocery}/>
                 </div>
             </div>
         );
