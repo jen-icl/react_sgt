@@ -23,3 +23,4 @@ import React from 'react';
 }
 
 export default GroceryRow;
+/*https://reactjs.org/docs/forms.html - ctrl+f checkbox */
