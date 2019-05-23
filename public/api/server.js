@@ -44,9 +44,9 @@ server.post('/api/groceries', (req, res) => {
     }
 
     db.connect(() => {
-        const query = 'INSERT INTO `grocery` SET `completed` = 0, `item`="' + item + '", `store`="' + store + '", `unit_price`="' + unit_price + '", `unit`="' + unit + '", `added`=NOW()';
+        const query = 'INSERT INTO `grocery` SET `completed` = 0, `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ?, `added`=NOW()';
 
-        db.query(query, (error, result) => {
+        db.query(query, [item, store, unit_price, unit], (error, result) => {
             if(!error){
                 output.success = true;
                 output.new_id = result.insertId;
@@ -76,9 +76,9 @@ server.put('/api/groceries', (req, res) => {
     }
 
     db.connect(() => {
-        const query = 'UPDATE `grocery` SET `item`="' + item + '", `store`="' + store + '", `unit_price`="' + unit_price + '", `unit`="' + unit + '" WHERE `id` =' + id;
+        const query = 'UPDATE `grocery` SET `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ? WHERE `id` =' + id;
 
-        db.query(query, (error, result) => {
+        db.query(query, [item, store, unit_price, unit], (error, result) => {
             if(!error){
                 output.success = true;
             } else {
