@@ -10,7 +10,7 @@ class GroceryTable extends Component {
         return (
             <div className={`col ${col}`}>
                 <table>
-                    <thead>
+                    <thead className="rocket-metallic">
                         <tr>
                             <th>Check</th>
                             <th>Grocery Item</th>
@@ -20,7 +20,7 @@ class GroceryTable extends Component {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="grayText">
                         {groceryElements}
                     </tbody>
                 </table>

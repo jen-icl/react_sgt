@@ -1,3 +1,60 @@
+// html {
+//     background: linear-gradient(to bottom, rgba(239, 229, 212, 0.5) 30%,
+//         rgba(46, 20, 19, 0.2));
+// }
+
+.rocket-metallic {
+    background-color: rgba(239, 229, 212, 0.5);
+    color: rgba(138, 114, 113, 0.616);
+}
+
+.grayText {
+    color: rgb(124, 135, 130);
+}
+
+.avocado {
+    background-color: rgb(28, 153, 0);
+    &:hover {
+        background-color: rgb(26, 138, 1);
+    }
+}
+
+.tangerine {
+    background-color: rgb(240, 125, 16);
+
+    &:hover {
+        background-color: rgb(219, 106, 0);
+    }
+}
+
+tr {
+    border-bottom: 1px solid rgba(124, 135, 130, 0.05);
+}
+
+tbody tr {
+    &:nth-child(even) {
+        background-color: rgba(124, 135, 130, 0.12);
+    }
+}
+
+label.checkbox {
+    position: relative;
+    top: 7px;
+}
+
+[type="checkbox"].filled-in:checked + span:not(.lever):after {
+    border: 2px solid rgb(240, 125, 16);
+    background-color: rgb(240, 125, 16);
+}
+
+[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after {
+    border: 2px solid rgb(124, 135, 130);
+}
+
 .dropdown-content {
     backface-visibility: hidden;
 }
+
+// input[type=text]:not(.browser-default){
+//     border-bottom: #f07d10;
+// }

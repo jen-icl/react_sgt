@@ -72,7 +72,7 @@ class AddGrocery extends Component {
                     </select>
                     <label htmlFor="unit"></label>
                 </div>
-                <button className="btn green">Add Grocery</button>
+                <button className="btn avocado">Add Grocery</button>
             </form>
         );
     }
