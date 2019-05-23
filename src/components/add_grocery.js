@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { isNullOrUndefined } from 'util';
 
 class AddGrocery extends Component {
     constructor(props){
@@ -9,15 +8,15 @@ class AddGrocery extends Component {
             item: '',
             store: '',
             unit_price: '',
-            unit: '',
+            unit: ''
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleInputChange(event) {
-        const {name} = event.target;
-        let {value} = event.target;
+        const {name, value} = event.target;
 
         this.setState({
             [name]: value
@@ -27,12 +26,13 @@ class AddGrocery extends Component {
     handleSubmit(event){
         event.preventDefault();
         this.props.add({...this.state});
+
         this.setState({
             item: '',
             store: '',
-            unit_price: undefined,
-            unit: '',
-        });
+            unit_price: '',
+            unit: ''
+        }, () => M.FormSelect.init(this.unit));
     }
 
     componentDidMount(){
@@ -43,7 +43,7 @@ class AddGrocery extends Component {
         const {col = "s12"} = this.props
         const {item, store, unit_price, unit} = this.state;
         return (
-            <form onSubmit={this.handleSubmit.bind(this)} className={`col ${col}`}>
+            <form onSubmit={this.handleSubmit} className={`col ${col}`}>
                 <div className="input-field">
                     <input name="item" autoComplete="off" id="item" type="text" value={item} onChange={this.handleInputChange} />
                     <label htmlFor="item">Grocery Item</label>
@@ -57,18 +57,18 @@ class AddGrocery extends Component {
                     <label htmlFor="unit_price">Unit Price</label>
                 </div>
                 <div className="input-field">
-                    <select name="unit" id="unit" ref={element => { this.unit = element }} value={unit} onChange={this.handleInputChange}>
+                    <select name="unit" id="unit" ref={element => { this.unit = element }} value={unit} onChange={this.handleInputChange} required>
                         <option value="" disabled>Select Unit</option>
-                        <option value="btl">Bottle (btl)</option>
-                        <option value="dz">Dozen (dz)</option>
-                        <option value="ea">Each (ea)</option>
-                        <option value="floz">Fluid Ounce (fl.oz)</option>
-                        <option value="gal">Gallon (gal)</option>
-                        <option value="g">Gram (g)</option>
-                        <option value="kg">Kilogram (kg)</option>
-                        <option value="oz">Ounce (oz)</option>
-                        <option value="pk">Pack (pk)</option>
-                        <option value="lb">Pound (lb)</option>
+                        <option value="/btl">Bottle (btl)</option>
+                        <option value="/dz">Dozen (dz)</option>
+                        <option value="/ea">Each (ea)</option>
+                        <option value="/fl.oz">Fluid Ounce (fl.oz)</option>
+                        <option value="/gal">Gallon (gal)</option>
+                        <option value="/g">Gram (g)</option>
+                        <option value="/kg">Kilogram (kg)</option>
+                        <option value="/oz">Ounce (oz)</option>
+                        <option value="/pk">Pack (pk)</option>
+                        <option value="/lb">Pound (lb)</option>
                     </select>
                     <label htmlFor="unit"></label>
                 </div>

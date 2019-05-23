@@ -18,51 +18,76 @@ class App extends Component{
         }
 
         this.addGrocery = this.addGrocery.bind(this);
+        this.updateGrocery = this.updateGrocery.bind(this);
+        this.updateCheckbox = this.updateCheckbox.bind(this);
         this.deleteGrocery = this.deleteGrocery.bind(this);
     }
 
+    async getGroceryData() {
+        try {
+            const resp = await axios.get('/api/groceries');
+            this.setState({
+                groceries: resp.data.data
+            });
+        } catch(err){
+            this.setState({
+                error:'Unable to retrieve Grocery Data'
+            });
+        }
+    }
 
     async addGrocery(grocery){
+        //need item, store, unit_price, unit
         grocery.unit_price = parseInt(grocery.unit_price * 100);
-        // try {
-        // await axios.post('/api/groceryList', grocery)
-        // this.getGroceryData();
-        // } catch(err){
-        //     this.setState({
-        //         error:'Error adding grocery data'
-        //     });
-        // }
+        try {
+            await axios.post('/api/groceries', grocery);
+            this.getGroceryData();
+        } catch(err){
+            this.setState({
+                error:'Unable to add Grocery Item'
+            });
+        }
+    }
+
+    async updateGrocery(grocery){
+        //need item, store, unit_price, unit, id
+        grocery.unit_price = parseInt(grocery.unit_price * 100);
+        try {
+            await axios.put('/api/groceries', grocery);
+            this.getGroceryData();
+        } catch(err) {
+            this.setState({
+                error: 'Unable to update Grocery Item'
+            });
+        }
+    }
+
+    async updateCheckbox(checkbox){
+        //need to convert completed to 0 or 1
+        //need id and completed
+        try {
+            await axios.put('/api/checkbox', checkbox);
+            this.getGroceryData();
+        } catch(err) {
+            this.setState({
+                error: 'Unable to update Checkbox'
+            });
+        }
     }
 
     async deleteGrocery(id){
-        console.log('delete clicked')
-        // try {
-        // await axios.delete(`/api/groceryList/${id}`);
-        // } catch(err){
-        //     this.setState({
-        //         error:'Error deleting grocery data'
-        //     });
-        // }
+        try {
+            await axios.delete(`/api/groceries/${id}`);
+            this.getGroceryData();
+        } catch(err){
+            this.setState({
+                error:'Unable to delete Grocery Item'
+            });
+        }
     }
 
     componentDidMount(){
         this.getGroceryData();
-    }
-
-    /* async */ getGroceryData(){
-        this.setState({
-            groceries: GroceryList
-        });
-        // try {
-        // const resp = await axios.get('/api/groceryList');
-        // this.setState({
-        //     groceries: resp.data.data
-        // });
-        // } catch(err){
-        //     this.setState({
-        //         error:'Error retrieving grocery data'
-        //     });
-        // }
     }
 
     render(){

@@ -3,7 +3,7 @@ import React from 'react';
  const GroceryRow = props => {
     return (
         <tr>
-            <td>
+            <td className="center">
                 <label htmlFor="completed">
                     <input type="checkbox" className="filled-in" id="completed" />
                     <span></span>
@@ -11,9 +11,9 @@ import React from 'react';
             </td>
             <td>{props.item}</td>
             <td>{props.store}</td>
-            <td>{props.unit_price}</td>
-            <td>{props.unit}</td>
-            <td>
+            <td className="center">${props.unit_price/100}</td>
+            <td className="center">{props.unit}</td>
+            <td className="center">
                 <button onClick={() => props.delete(props.id)} className="btn btn-floating red darken-2">
                     <i className="material-icons">delete</i>
                 </button>
