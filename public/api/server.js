@@ -14,14 +14,14 @@ server.get('/api/groceries', (req, res) => {
     db.connect(() => {
         const query = 'SELECT * FROM `grocery`';
 
-        db.query(query, (error, data) => {
+        db.query(query, (error, result) => {
             const output = {
-                success: false,
+                success: false
             };
 
             if(!error){
                 output.success = true;
-                output.data = data;
+                output.data = result;
             } else {
                 output.error = error;
             }
@@ -32,14 +32,13 @@ server.get('/api/groceries', (req, res) => {
 });
 
 server.post('/api/groceries', (req, res) => {
-    console.log('see this', req.body)
     const {item, store, unit_price, unit} = req.body;
     const output = {
-        success: false,
+        success: false
     };
 
     if (item === undefined || store === undefined || unit_price === undefined || unit === undefined){
-        output.error = 'Invalid item, store, unit_price, or unit';
+        output.error = 'Error: a field is blank';
         res.send(output);
         return;
     }
@@ -60,32 +59,33 @@ server.post('/api/groceries', (req, res) => {
     });
 });
 
-server.delete('/api/grades/:student_id', (request, response) => {
-    if(request.params.student_id === undefined){
-        response.send({
-            success: false,
-            error: 'must provide a student id for delete'
-        });
+server.delete('/api/groceries/:grocery_id', (req, res) => {
+    console.log(req.params)
+    const output = {
+        success: false,
+    };
+
+    if(req.params.grocery_id === undefined){
+        output.error = 'Error: must provide an id to delete'
+        res.send(output);
         return;
     }
+
     db.connect(() => {
-        const query = 'DELETE FROM `grades` WHERE `id`=' + request.params.student_id;
+        const query = 'DELETE FROM `grocery` WHERE `id`=' + req.params.grocery_id;
+
         db.query(query, (error, result) => {
             if(!error){
-                response.send({
-                    success: true
-                });
+                output.success = true;
             } else {
-                response.send({
-                    success: false,
-                    error
-                });
+                output.error = error;
             }
+
+            res.send(output);
         })
     });
 });
 
 server.listen(PORT, ()=>{
-    //console.log('server is running on port 3001');
     console.log('carrier has arrived on port', PORT);
 });
