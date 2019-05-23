@@ -37,7 +37,7 @@ server.post('/api/groceries', (req, res) => {
         success: false
     };
 
-    if (item === undefined || store === undefined || unit_price === undefined || unit === undefined){
+    if(item === undefined || store === undefined || unit_price === undefined || unit === undefined){
         output.error = 'Error: a field is blank';
         res.send(output);
         return;
@@ -59,14 +59,40 @@ server.post('/api/groceries', (req, res) => {
     });
 });
 
-server.delete('/api/groceries/:grocery_id', (req, res) => {
-    console.log(req.params)
+server.put('/api/groceries', (req, res) => {
+    const {id, item, store, unit_price, unit} = req.body;
     const output = {
-        success: false,
+        success: false
+    };
+
+    if (item === undefined || store === undefined || unit_price === undefined || unit === undefined) {
+        output.error = 'Error: a field is blank';
+        res.send(output);
+        return;
+    }
+
+    db.connect(() => {
+        const query = 'UPDATE `grocery` SET `item`="' + item + '", `store`="' + store + '", `unit_price`="' + unit_price + '", `unit`="' + unit + '" WHERE `id` =' + id;
+
+        db.query(query, (error, result) => {
+            if(!error){
+                output.success = true;
+            } else {
+                output.error = error;
+            }
+
+            res.send(output);
+        });
+    });
+});
+
+server.delete('/api/groceries/:grocery_id', (req, res) => {
+    const output = {
+        success: false
     };
 
     if(req.params.grocery_id === undefined){
-        output.error = 'Error: must provide an id to delete'
+        output.error = 'Error: must provide an id to delete';
         res.send(output);
         return;
     }
@@ -82,7 +108,7 @@ server.delete('/api/groceries/:grocery_id', (req, res) => {
             }
 
             res.send(output);
-        })
+        });
     });
 });
 
