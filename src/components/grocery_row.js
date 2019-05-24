@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from './modal';
 
  const GroceryRow = props => {
     const {id, item, store, unit_price, unit, completed, deleteGrocery, updateCheckbox} = props;
@@ -20,6 +21,7 @@ import React from 'react';
             <td>$ {unit_price/100}</td>
             <td>{unit}</td>
             <td>
+                <Modal />
                 <button onClick={() => deleteGrocery(id)} className="btn btn-floating tangerineBtn">
                     <i className="material-icons">delete</i>
                 </button>

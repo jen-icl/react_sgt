@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Niconne&display=swap');
+
 body {
     background-color: rgba(218, 226, 222, 0.1);
 }
@@ -11,6 +13,7 @@ body {
 
 .tangerineBtn {
     background-color: rgb(240, 125, 16);
+    margin-left: 5px;
 
     &:hover {
         background-color: rgb(219, 106, 0);
@@ -19,6 +22,7 @@ body {
 
 h1 {
     font-size: 3.56rem;
+    font-family: 'Niconne', cursive;
 }
 
 .grocery-table {
@@ -101,6 +105,6 @@ input[type=text]:not(.browser-default), input[type=number]:not(.browser-default)
     }
 
     table {
-        min-width: 600px;
+        min-width: 730px;
     }
 }
