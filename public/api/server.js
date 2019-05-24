@@ -11,7 +11,12 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/api/groceries', (req, res) => {
-    db.connect(() => {
+    db.connect(err => {
+        if(err){
+            console.log('Error', err);
+            return;
+        }
+
         const query = 'SELECT * FROM `grocery`';
 
         db.query(query, (error, result) => {
@@ -43,7 +48,12 @@ server.post('/api/groceries', (req, res) => {
         return;
     }
 
-    db.connect(() => {
+    db.connect(err => {
+        if (err) {
+            console.log('Error', err);
+            return;
+        }
+
         const query = 'INSERT INTO `grocery` SET `completed` = 0, `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ?, `added`=NOW()';
 
         db.query(query, [item, store, unit_price, unit], (error, result) => {
@@ -75,7 +85,12 @@ server.put('/api/groceries', (req, res) => {
         return;
     }
 
-    db.connect(() => {
+    db.connect(err => {
+        if (err) {
+            console.log('Error', err);
+            return;
+        }
+
         const query = 'UPDATE `grocery` SET `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ? WHERE `id` =' + id;
 
         db.query(query, [item, store, unit_price, unit], (error, result) => {
@@ -106,7 +121,12 @@ server.put('/api/checkbox', (req, res) => {
         return;
     }
 
-    db.connect(() => {
+    db.connect(err => {
+        if (err) {
+            console.log('Error', err);
+            return;
+        }
+
         const query = 'UPDATE `grocery` SET `completed`=' + completed + ' WHERE `id` =' + id;
 
         db.query(query, (error, result) => {
@@ -133,7 +153,12 @@ server.delete('/api/groceries/:grocery_id', (req, res) => {
         return;
     }
 
-    db.connect(() => {
+    db.connect(err => {
+        if (err) {
+            console.log('Error', err);
+            return;
+        }
+
         const query = 'DELETE FROM `grocery` WHERE `id`=' + req.params.grocery_id;
 
         db.query(query, (error, result) => {
