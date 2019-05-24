@@ -4,17 +4,17 @@ import React from 'react';
     return (
         <tr>
             <td className="center">
-                <label htmlFor="completed">
-                    <input type="checkbox" className="filled-in" id="completed" />
+                <label htmlFor="completed" className="checkbox">
+                    <input  type="checkbox" className="filled-in" id="completed" />
                     <span></span>
                 </label>
             </td>
             <td>{props.item}</td>
             <td>{props.store}</td>
-            <td className="center">${props.unit_price/100}</td>
-            <td className="center">{props.unit}</td>
-            <td className="center">
-                <button onClick={() => props.delete(props.id)} className="btn btn-floating red darken-2">
+            <td>$ {props.unit_price/100}</td>
+            <td>{props.unit}</td>
+            <td>
+                <button onClick={() => props.delete(props.id)} className="btn btn-floating tangerineBtn">
                     <i className="material-icons">delete</i>
                 </button>
             </td>

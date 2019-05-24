@@ -93,11 +93,11 @@ class App extends Component{
     render(){
         return (
             <div>
-                <h1 className="center">Grocery List</h1>
+                <h1 className="center grey-text text-darken-2">Grocery List</h1>
                 <h5 className="red-text text-darken-2">{this.state.error}</h5>
                 <div className="row">
-                    <GroceryTable col="s12 m8" delete={this.deleteGrocery} list={this.state.groceries}/>
-                    <AddGrocery col="s12 m4" add={this.addGrocery}/>
+                    <GroceryTable col="s12 l9" delete={this.deleteGrocery} list={this.state.groceries}/>
+                    <AddGrocery col="s12 l3" add={this.addGrocery}/>
                 </div>
             </div>
         );

@@ -8,10 +8,10 @@ class GroceryTable extends Component {
             return <GroceryRow delete={this.props.delete} key={grocery.id} {...grocery}/>
         });
         return (
-            <div className={`col ${col}`}>
+            <div className={`grocery-table col ${col}`}>
                 <table>
                     <thead>
-                        <tr>
+                        <tr className="deep-orange lighten-3 grey-text text-darken-2">
                             <th>Check</th>
                             <th>Grocery Item</th>
                             <th>Store</th>
@@ -20,7 +20,7 @@ class GroceryTable extends Component {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="grey-text text-darken-2">
                         {groceryElements}
                     </tbody>
                 </table>

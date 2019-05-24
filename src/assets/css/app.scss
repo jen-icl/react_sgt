@@ -1,3 +1,107 @@
+body {
+    background-color: rgba(124, 135, 130, 0.1);
+}
+
+.avocadoBtn {
+    background-color: rgb(28, 153, 0);
+    &:hover {
+        background-color: rgb(26, 138, 1);
+    }
+}
+
+.tangerineBtn {
+    background-color: rgb(240, 125, 16);
+
+    &:hover {
+        background-color: rgb(219, 106, 0);
+    }
+}
+
+h1 {
+    font-size: 3.56rem;
+    color: rgb(76, 82, 79);
+}
+
+.grocery-table {
+    margin-bottom: 1.5rem;
+}
+
+tr {
+    border-bottom: 1px solid rgba(117, 117, 117, 0.1);
+}
+
+thead tr {
+    text-transform: uppercase;
+}
+
+tbody tr {
+    text-transform: capitalize;
+
+    &:nth-child(even) {
+        background-color: rgba(251, 233, 231, 0.3);
+    }
+
+    &:hover {
+        background-color: rgb(251, 233, 231);
+    }
+}
+
+label.checkbox {
+    position: relative;
+    top: 7px;
+}
+
+[type="checkbox"].filled-in {
+    &:checked + span:not(.lever):after {
+        border: 2px solid rgb(240, 125, 16);
+        background-color: rgb(240, 125, 16);
+    }
+
+    &:not(:checked) + span:not(.lever):after {
+        border: 2px solid rgb(117, 117, 117);
+    }
+}
+
+.form-header h6 {
+    text-transform: uppercase;
+    line-height: 21.75px;
+    font-size: 14.5px;
+    font-weight: 700;
+    margin: 0;
+    padding: 15px;
+}
+
+.input-field > label {
+    color: rgb(117, 117, 117);
+}
+
+input[type=text]:not(.browser-default), input[type=number]:not(.browser-default){
+    border-bottom: 1px solid rgb(117, 117, 117);
+
+    &:focus:not([read-only]){
+        border-bottom: 1px solid rgb(240, 125, 16);
+        box-shadow: 0 1px 0 0 rgb(240, 125, 16);
+
+        & + label {
+            color: rgb(240, 125, 16);
+        }
+    }
+}
+
 .dropdown-content {
     backface-visibility: hidden;
+}
+
+.dropdown-content li > span {
+    color: rgb(240, 125, 16);
+}
+
+@media (max-width: 768px) {
+    .grocery-table {
+        overflow-x: scroll;
+    }
+
+    table {
+        min-width: 600px;
+    }
 }
