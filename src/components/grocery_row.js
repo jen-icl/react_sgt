@@ -11,10 +11,10 @@ import React from 'react';
             </td>
             <td>{props.item}</td>
             <td>{props.store}</td>
-            <td>${props.unit_price/100}</td>
+            <td>$ {props.unit_price/100}</td>
             <td>{props.unit}</td>
             <td>
-                <button onClick={() => props.delete(props.id)} className="btn btn-floating tangerine">
+                <button onClick={() => props.delete(props.id)} className="btn btn-floating tangerineBtn">
                     <i className="material-icons">delete</i>
                 </button>
             </td>

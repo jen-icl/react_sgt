@@ -1,25 +1,15 @@
-// html {
-//     background: linear-gradient(to bottom, rgba(239, 229, 212, 0.5) 30%,
-//         rgba(46, 20, 19, 0.2));
-// }
-
-.rocket-metallic {
-    background-color: rgba(239, 229, 212, 0.5);
-    color: rgba(138, 114, 113, 0.616);
+body {
+    background-color: rgba(124, 135, 130, 0.1);
 }
 
-.grayText {
-    color: rgb(124, 135, 130);
-}
-
-.avocado {
+.avocadoBtn {
     background-color: rgb(28, 153, 0);
     &:hover {
         background-color: rgb(26, 138, 1);
     }
 }
 
-.tangerine {
+.tangerineBtn {
     background-color: rgb(240, 125, 16);
 
     &:hover {
@@ -27,13 +17,32 @@
     }
 }
 
+h1 {
+    font-size: 3.56rem;
+    color: rgb(76, 82, 79);
+}
+
+.grocery-table {
+    margin-bottom: 1.5rem;
+}
+
 tr {
-    border-bottom: 1px solid rgba(124, 135, 130, 0.05);
+    border-bottom: 1px solid rgba(117, 117, 117, 0.1);
+}
+
+thead tr {
+    text-transform: uppercase;
 }
 
 tbody tr {
+    text-transform: capitalize;
+
     &:nth-child(even) {
-        background-color: rgba(124, 135, 130, 0.12);
+        background-color: rgba(251, 233, 231, 0.3);
+    }
+
+    &:hover {
+        background-color: rgb(251, 233, 231);
     }
 }
 
@@ -42,19 +51,57 @@ label.checkbox {
     top: 7px;
 }
 
-[type="checkbox"].filled-in:checked + span:not(.lever):after {
-    border: 2px solid rgb(240, 125, 16);
-    background-color: rgb(240, 125, 16);
+[type="checkbox"].filled-in {
+    &:checked + span:not(.lever):after {
+        border: 2px solid rgb(240, 125, 16);
+        background-color: rgb(240, 125, 16);
+    }
+
+    &:not(:checked) + span:not(.lever):after {
+        border: 2px solid rgb(117, 117, 117);
+    }
 }
 
-[type="checkbox"].filled-in:not(:checked) + span:not(.lever):after {
-    border: 2px solid rgb(124, 135, 130);
+.form-header h6 {
+    text-transform: uppercase;
+    line-height: 21.75px;
+    font-size: 14.5px;
+    font-weight: 700;
+    margin: 0;
+    padding: 15px;
+}
+
+.input-field > label {
+    color: rgb(117, 117, 117);
+}
+
+input[type=text]:not(.browser-default), input[type=number]:not(.browser-default){
+    border-bottom: 1px solid rgb(117, 117, 117);
+
+    &:focus:not([read-only]){
+        border-bottom: 1px solid rgb(240, 125, 16);
+        box-shadow: 0 1px 0 0 rgb(240, 125, 16);
+
+        & + label {
+            color: rgb(240, 125, 16);
+        }
+    }
 }
 
 .dropdown-content {
     backface-visibility: hidden;
 }
 
-// input[type=text]:not(.browser-default){
-//     border-bottom: #f07d10;
-// }
+.dropdown-content li > span {
+    color: rgb(240, 125, 16);
+}
+
+@media (max-width: 768px) {
+    .grocery-table {
+        overflow-x: scroll;
+    }
+
+    table {
+        min-width: 600px;
+    }
+}
