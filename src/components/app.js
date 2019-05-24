@@ -6,8 +6,6 @@ import axios from 'axios';
 import AddGrocery from './add_grocery';
 import GroceryTable from './grocery_table';
 
-import GroceryList from '../dummy_data/grocery_list';
-
 class App extends Component{
     constructor(props){
         super(props);
@@ -62,11 +60,14 @@ class App extends Component{
         }
     }
 
-    async updateCheckbox(checkbox){
-        //need to convert completed to 0 or 1
-        //need id and completed
+    async updateCheckbox(id, completed){
+        completed = completed ? 0 : 1;
+
         try {
-            await axios.put('/api/checkbox', checkbox);
+            await axios.put('/api/checkbox', {
+                id,
+                completed
+            });
             this.getGroceryData();
         } catch(err) {
             this.setState({
@@ -96,7 +97,7 @@ class App extends Component{
                 <h1 className="center grey-text text-darken-2">Grocery List</h1>
                 <h5 className="red-text text-darken-2">{this.state.error}</h5>
                 <div className="row">
-                    <GroceryTable col="s12 l9" delete={this.deleteGrocery} list={this.state.groceries}/>
+                    <GroceryTable col="s12 l9" deleteGrocery={this.deleteGrocery} updateCheckbox={this.updateCheckbox} list={this.state.groceries}/>
                     <AddGrocery col="s12 l3" add={this.addGrocery}/>
                 </div>
             </div>
