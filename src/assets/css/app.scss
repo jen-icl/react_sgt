@@ -4,25 +4,27 @@ body {
     background-color: rgba(218, 226, 222, 0.1);
 }
 
-.avocadoBtn {
-    background-color: rgb(28, 153, 0);
+.grayBtn {
+    background-color:rgb(71, 82, 87);
+
     &:hover {
-        background-color: rgb(26, 138, 1);
+        background-color:rgb(49, 57, 61);
     }
 }
 
 .tangerineBtn {
-    background-color: rgb(240, 125, 16);
+    background-color: rgb(255, 112, 67);
     margin-left: 5px;
 
     &:hover {
-        background-color: rgb(219, 106, 0);
+        background-color: rgb(228, 99, 59);
     }
 }
 
 h1 {
     font-size: 3.56rem;
     font-family: 'Niconne', cursive;
+    color: rgb(71, 82, 87);
 }
 
 .grocery-table {
@@ -56,8 +58,8 @@ label.checkbox {
 
 [type="checkbox"].filled-in {
     &:checked + span:not(.lever):after {
-        border: 2px solid rgb(240, 125, 16);
-        background-color: rgb(240, 125, 16);
+        border: 2px solid rgb(255, 112, 67);
+        background-color: rgb(255, 112, 67);
     }
 
     &:not(:checked) + span:not(.lever):after {
@@ -82,11 +84,11 @@ input[type=text]:not(.browser-default), input[type=number]:not(.browser-default)
     border-bottom: 1px solid rgb(117, 117, 117);
 
     &:focus:not([read-only]){
-        border-bottom: 1px solid rgb(240, 125, 16);
-        box-shadow: 0 1px 0 0 rgb(240, 125, 16);
+        border-bottom: 1px solid rgb(255, 112, 67);
+        box-shadow: 0 1px 0 0 rgb(255, 112, 67);
 
         & + label {
-            color: rgb(240, 125, 16);
+            color: rgb(255, 112, 67);
         }
     }
 }
@@ -96,7 +98,7 @@ input[type=text]:not(.browser-default), input[type=number]:not(.browser-default)
 }
 
 .dropdown-content li > span {
-    color: rgb(240, 125, 16);
+    color: rgb(255, 112, 67);
 }
 
 @media (max-width: 768px) {

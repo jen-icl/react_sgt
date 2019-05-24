@@ -57,8 +57,8 @@ class AddGrocery extends Component {
                         <label htmlFor="store">Store</label>
                     </div>
                     <div className="input-field">
-                        <input name="unit_price" autoComplete="off" id="unit_price" type="number" value={unit_price} onChange={this.handleInputChange} />
-                        <label htmlFor="unit_price">Unit Price</label>
+                        <input name="unit_price" autoComplete="off" id="unit_price" type="number" min="0" step="any" value={unit_price} onChange={this.handleInputChange} />
+                        <label htmlFor="unit_price">Unit Price ($)</label>
                     </div>
                     <div className="input-field">
                         <select name="unit" id="unit" ref={element => { this.unit = element }} value={unit} onChange={this.handleInputChange} required>
@@ -76,7 +76,7 @@ class AddGrocery extends Component {
                         </select>
                         <label htmlFor="unit"></label>
                     </div>
-                    <button className="btn avocadoBtn">Add Grocery</button>
+                    <button className="btn grayBtn">Add Grocery</button>
                 </form>
             </div>
         );

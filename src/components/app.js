@@ -3,8 +3,9 @@ import 'materialize-css/dist/js/materialize.min';
 import '../assets/css/app.scss';
 import React, {Component} from 'react';
 import axios from 'axios';
-import AddGrocery from './add_grocery';
 import GroceryTable from './grocery_table';
+import AddGrocery from './add_grocery';
+import UpdateGrocery from './update_grocery';
 
 class App extends Component{
     constructor(props){
@@ -12,10 +13,13 @@ class App extends Component{
 
         this.state = {
             groceries: [],
+            updateGroceryData: {},
+            modal: false,
             error: ''
         }
 
         this.addGrocery = this.addGrocery.bind(this);
+        this.updateModal = this.updateModal.bind(this);
         this.updateGrocery = this.updateGrocery.bind(this);
         this.updateCheckbox = this.updateCheckbox.bind(this);
         this.deleteGrocery = this.deleteGrocery.bind(this);
@@ -35,8 +39,7 @@ class App extends Component{
     }
 
     async addGrocery(grocery){
-        //need item, store, unit_price, unit
-        grocery.unit_price = parseInt(grocery.unit_price * 100);
+        grocery.unit_price = parseFloat(grocery.unit_price).toFixed(2) * 100;
         try {
             await axios.post('/api/groceries', grocery);
             this.getGroceryData();
@@ -47,9 +50,15 @@ class App extends Component{
         }
     }
 
+    updateModal(grocery){
+        this.setState({
+            modal: !this.state.modal,
+            updateGroceryData: grocery || {}
+        });
+    }
+
     async updateGrocery(grocery){
-        //need item, store, unit_price, unit, id
-        grocery.unit_price = parseInt(grocery.unit_price * 100);
+        grocery.unit_price = parseFloat(grocery.unit_price).toFixed(2) * 100;
         try {
             await axios.put('/api/groceries', grocery);
             this.getGroceryData();
@@ -92,14 +101,17 @@ class App extends Component{
     }
 
     render(){
+        const {modal, updateGroceryData} = this.state;
+
         return (
             <div>
-                <h1 className="center grey-text text-darken-2">Grocery List</h1>
+                <h1 className="center">Grocery List</h1>
                 <h5 className="red-text text-darken-2">{this.state.error}</h5>
                 <div className="row">
-                    <GroceryTable col="s12 l9" deleteGrocery={this.deleteGrocery} updateCheckbox={this.updateCheckbox} list={this.state.groceries}/>
-                    <AddGrocery col="s12 l3" add={this.addGrocery}/>
+                    <GroceryTable col="s12 l9" deleteGrocery={this.deleteGrocery} updateCheckbox={this.updateCheckbox} updateModal={this.updateModal} list={this.state.groceries} />
+                    <AddGrocery col="s12 l3" addGrocery={this.addGrocery} />
                 </div>
+                {modal ? <UpdateGrocery updateGroceryData={updateGroceryData} updateGrocery={this.updateGrocery} updateModal={this.updateModal} /> : null}
             </div>
         );
     }

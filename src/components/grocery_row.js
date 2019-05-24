@@ -1,8 +1,7 @@
 import React from 'react';
-import Modal from './modal';
 
  const GroceryRow = props => {
-    const {id, item, store, unit_price, unit, completed, deleteGrocery, updateCheckbox} = props;
+    const {id, item, store, unit_price, unit, completed, deleteGrocery, updateCheckbox, updateModal} = props;
      const checkboxStatus = completed ?
         <label className="checkbox">
              <input type="checkbox" className="filled-in" onChange={() => updateCheckbox(id, completed)} defaultChecked/>
@@ -18,10 +17,12 @@ import Modal from './modal';
             <td className="center">{checkboxStatus}</td>
             <td>{item}</td>
             <td>{store}</td>
-            <td>$ {unit_price/100}</td>
+            <td>$ {(unit_price/100).toFixed(2)}</td>
             <td>{unit}</td>
             <td>
-                <Modal />
+                <button onClick={() => updateModal(props)} className="btn btn-floating grayBtn">
+                    <i className="material-icons">edit</i>
+                </button>
                 <button onClick={() => deleteGrocery(id)} className="btn btn-floating tangerineBtn">
                     <i className="material-icons">delete</i>
                 </button>
@@ -31,4 +32,3 @@ import Modal from './modal';
 }
 
 export default GroceryRow;
-/*https://reactjs.org/docs/forms.html - ctrl+f checkbox */
