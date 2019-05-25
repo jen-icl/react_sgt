@@ -5,34 +5,71 @@ const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 
 const server = express();
-const db = mysql.createConnection(mysqlcredentials);
+const db = mysql.createPool(mysqlcredentials);
 
 server.use(cors());
 server.use(express.json());
 
+const reconnect = db => {
+    console.log('New connection tentative...');
+
+    db = mysql.createPool(mysqlcredentials);
+
+    db.getConnection(err => {
+        if(err) {
+            setTimeout(reconnect(db), 2000);
+        } else {
+            console.log('New connection established with the database');
+            return db;
+        }
+    });
+}
+
+db.getConnection((err, connection) => {
+    if (err) {
+        console.log('Cannot establish a connection with the database');
+        db = reconnect(db);
+    } else {
+        console.log('New connection established with the database');
+        connection.release();
+    }
+});
+
+db.on('error', err => {
+    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        return reconnect(db);
+    }else if (err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
+        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        return reconnect(db);
+    }else if (err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
+        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        return reconnect(db);
+    }else if (err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
+        console.log('Cannot establish a connection with the database (' + err.code + ')');
+    }else {
+        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        return reconnect(db);
+    }
+});
+
+
 server.get('/api/groceries', (req, res) => {
-    db.connect(err => {
-        if(err){
-            console.log('Error', err);
-            return;
+    const query = 'SELECT * FROM `grocery`';
+
+    db.query(query, (error, result) => {
+        const output = {
+            success: false
+        };
+
+        if(!error){
+            output.success = true;
+            output.data = result;
+        } else {
+            output.error = error;
         }
 
-        const query = 'SELECT * FROM `grocery`';
-
-        db.query(query, (error, result) => {
-            const output = {
-                success: false
-            };
-
-            if(!error){
-                output.success = true;
-                output.data = result;
-            } else {
-                output.error = error;
-            }
-
-            res.send(output);
-        });
+        res.send(output);
     });
 });
 
@@ -48,24 +85,17 @@ server.post('/api/groceries', (req, res) => {
         return;
     }
 
-    db.connect(err => {
-        if (err) {
-            console.log('Error', err);
-            return;
+    const query = 'INSERT INTO `grocery` SET `completed` = 0, `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ?, `added`=NOW()';
+
+    db.query(query, [item, store, unit_price, unit], (error, result) => {
+        if(!error){
+            output.success = true;
+            output.new_id = result.insertId;
+        } else {
+            output.error = error;
         }
 
-        const query = 'INSERT INTO `grocery` SET `completed` = 0, `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ?, `added`=NOW()';
-
-        db.query(query, [item, store, unit_price, unit], (error, result) => {
-            if(!error){
-                output.success = true;
-                output.new_id = result.insertId;
-            } else {
-                output.error = error;
-            }
-
-            res.send(output);
-        });
+        res.send(output);
     });
 });
 
@@ -85,23 +115,16 @@ server.put('/api/groceries', (req, res) => {
         return;
     }
 
-    db.connect(err => {
-        if (err) {
-            console.log('Error', err);
-            return;
+    const query = 'UPDATE `grocery` SET `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ? WHERE `id` =' + id;
+
+    db.query(query, [item, store, unit_price, unit], (error, result) => {
+        if(!error){
+            output.success = true;
+        } else {
+            output.error = error;
         }
 
-        const query = 'UPDATE `grocery` SET `item`= ?, `store`= ?, `unit_price`= ?, `unit`= ? WHERE `id` =' + id;
-
-        db.query(query, [item, store, unit_price, unit], (error, result) => {
-            if(!error){
-                output.success = true;
-            } else {
-                output.error = error;
-            }
-
-            res.send(output);
-        });
+        res.send(output);
     });
 });
 
@@ -121,23 +144,16 @@ server.put('/api/checkbox', (req, res) => {
         return;
     }
 
-    db.connect(err => {
-        if (err) {
-            console.log('Error', err);
-            return;
+    const query = 'UPDATE `grocery` SET `completed`=' + completed + ' WHERE `id` =' + id;
+
+    db.query(query, (error, result) => {
+        if(!error){
+            output.success = true;
+        } else {
+            output.error = error;
         }
 
-        const query = 'UPDATE `grocery` SET `completed`=' + completed + ' WHERE `id` =' + id;
-
-        db.query(query, (error, result) => {
-            if(!error){
-                output.success = true;
-            } else {
-                output.error = error;
-            }
-
-            res.send(output);
-        });
+        res.send(output);
     });
 });
 
@@ -153,23 +169,16 @@ server.delete('/api/groceries/:grocery_id', (req, res) => {
         return;
     }
 
-    db.connect(err => {
-        if (err) {
-            console.log('Error', err);
-            return;
+    const query = 'DELETE FROM `grocery` WHERE `id`=' + req.params.grocery_id;
+
+    db.query(query, (error, result) => {
+        if(!error){
+            output.success = true;
+        } else {
+            output.error = error;
         }
 
-        const query = 'DELETE FROM `grocery` WHERE `id`=' + req.params.grocery_id;
-
-        db.query(query, (error, result) => {
-            if(!error){
-                output.success = true;
-            } else {
-                output.error = error;
-            }
-
-            res.send(output);
-        });
+        res.send(output);
     });
 });
 

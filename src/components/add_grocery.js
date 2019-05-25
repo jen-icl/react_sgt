@@ -25,7 +25,7 @@ class AddGrocery extends Component {
 
     handleSubmit(event){
         event.preventDefault();
-        this.props.add({...this.state});
+        this.props.addGrocery({...this.state});
 
         this.setState({
             item: '',
