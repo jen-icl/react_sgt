@@ -27,7 +27,7 @@ const reconnect = db => {
 
 db.getConnection((err, connection) => {
     if (err) {
-        console.log('Cannot establish a connection with the database');
+        console.error('Cannot establish a connection with the database');
         db = reconnect(db);
     } else {
         console.log('New connection established with the database');
@@ -37,18 +37,18 @@ db.getConnection((err, connection) => {
 
 db.on('error', err => {
     if (err.code === "PROTOCOL_CONNECTION_LOST") {
-        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
     }else if (err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
-        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
     }else if (err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
-        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
     }else if (err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
-        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        console.error('Cannot establish a connection with the database (' + err.code + ')');
     }else {
-        console.log('Cannot establish a connection with the database (' + err.code + ')');
+        console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
     }
 });
