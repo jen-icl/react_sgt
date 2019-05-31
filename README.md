@@ -56,5 +56,5 @@ This repo is built with React.js and Node.js. Follow the below setup instruction
     - import the sql database into phpMyAdmin, or similar found in the public/api/data folder
 11. Open a browser and navigate to `localhost:3000`
 
-### Authors
+### Author
 - **Jennifer Lai** (https://github.com/jen-icl)
