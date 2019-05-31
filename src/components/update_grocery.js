@@ -97,22 +97,31 @@ class UpdateGrocery extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="input-field">
                             <input name="item" autoComplete="off" id="item" type="text" value={item} onChange={this.handleInputChange} onBlur={this.handleBlur} required />
-                            <label className="active" htmlFor="item">Grocery Item</label>
+                            <label className="active" htmlFor="item">
+                                <i className="material-icons">local_pizza</i>
+                                Grocery Item
+                            </label>
                             {touched.item && !item ? <p className="errorInput red-text text-darken-2">Please enter grocery item</p> : null}
                         </div>
                         <div className="input-field">
                             <input name="store" autoComplete="off" id="store" type="text" value={store} onChange={this.handleInputChange} onBlur={this.handleBlur} required />
-                            <label className="active" htmlFor="store">Store</label>
+                            <label className="active" htmlFor="store">
+                                <i className="material-icons">store</i>
+                                Store
+                            </label>
                             {touched.store && !store ? <p className="errorInput red-text text-darken-2">Please enter store name</p> : null}
                         </div>
                         <div className="input-field">
                             <input name="unit_price" autoComplete="off" id="unit_price" type="number" min="0" step="any" value={unit_price} onChange={this.handleInputChange} onBlur={this.handleBlur} required />
-                            <label className="active" htmlFor="unit_price">Unit Price</label>
+                            <label className="active" htmlFor="unit_price">
+                                <i className="material-icons">attach_money</i>
+                                Unit Price
+                            </label>
                             {touched.unit_price && !unit_price ? <p className="errorInput red-text text-darken-2">Please enter unit price ($)</p> : null}
                         </div>
                         <div className="input-field">
                             <select name="unit" id="unit" ref={element => {this.unit = element}} value={unit} onChange={this.handleInputChange}>
-                                <option value="" disabled>Select Unit</option>
+                                <option value="" disabled>Select Unit Type</option>
                                 <option value="/btl">Bottle (btl)</option>
                                 <option value="/dz">Dozen (dz)</option>
                                 <option value="/ea">Each (ea)</option>
