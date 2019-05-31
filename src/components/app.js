@@ -28,12 +28,18 @@ class App extends Component{
     async getGroceryData() {
         try {
             const resp = await axios.get('/api/groceries');
-            this.setState({
-                groceries: resp.data.data
-            });
+            const {success, error, data} = resp.data;
+
+            if(success){
+                this.setState({
+                    groceries: data
+                });
+            } else {
+                throw(error);
+            }
         } catch(err){
             this.setState({
-                error:'Unable to retrieve Grocery Data'
+                error:`Unable to retrieve Grocery Data, ${err.code}`
             });
         }
     }
@@ -41,11 +47,17 @@ class App extends Component{
     async addGrocery(grocery) {
         grocery.unit_price = parseFloat(grocery.unit_price).toFixed(2) * 100;
         try {
-            await axios.post('/api/groceries', grocery);
-            this.getGroceryData();
+            const resp = await axios.post('/api/groceries', grocery);
+            const {success, error} = resp.data;
+
+            if(success){
+                this.getGroceryData();
+            } else {
+                throw(error);
+            }
         } catch(err){
             this.setState({
-                error:'Unable to add Grocery Item'
+                error:`Unable to add Grocery Item, ${err.code}`
             });
         }
     }
@@ -60,11 +72,17 @@ class App extends Component{
     async updateGrocery(grocery) {
         grocery.unit_price = parseFloat(grocery.unit_price).toFixed(2) * 100;
         try {
-            await axios.put('/api/groceries', grocery);
-            this.getGroceryData();
+            const resp = await axios.put('/api/groceries', grocery);
+            const {success, error} = resp.data;
+
+            if(success){
+                this.getGroceryData();
+            } else {
+                throw(error);
+            }
         } catch(err){
             this.setState({
-                error: 'Unable to update Grocery Item'
+                error: `Unable to update Grocery Item, ${err.code}`
             });
         }
     }
@@ -73,25 +91,37 @@ class App extends Component{
         completed = completed ? 0 : 1;
 
         try {
-            await axios.put('/api/checkbox', {
+            const resp = await axios.put('/api/checkbox', {
                 id,
                 completed
             });
-            this.getGroceryData();
+            const {success, error} = resp.data;
+
+            if(success){
+                this.getGroceryData();
+            } else {
+                throw(error);
+            }
         } catch(err){
             this.setState({
-                error: 'Unable to update Checkbox'
+                error: `Unable to update Checkbox, ${err.code}`
             });
         }
     }
 
     async deleteGrocery(id) {
         try {
-            await axios.delete(`/api/groceries/${id}`);
-            this.getGroceryData();
+            const resp = await axios.delete(`/api/groceries/${id}`);
+            const {success, error} = resp.data;
+
+            if(success){
+                this.getGroceryData();
+            } else {
+                throw(error);
+            }
         } catch(err){
             this.setState({
-                error:'Unable to delete Grocery Item'
+                error:`Unable to delete Grocery Item ${err.code}`
             });
         }
     }
