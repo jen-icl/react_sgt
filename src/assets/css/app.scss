@@ -86,6 +86,12 @@ label.checkbox {
 
 .input-field > label {
     color: rgb(117, 117, 117);
+
+    .material-icons {
+        position: relative;
+        top: 4px;
+        font-size: 19px;
+    }
 }
 
 input[type=text]:not(.browser-default), input[type=number]:not(.browser-default){
