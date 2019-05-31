@@ -14,6 +14,7 @@
 - Technologies used:
     - React.js
     - Node.js
+    - MySQL
     - Sass
     - MaterializeCSS
 
