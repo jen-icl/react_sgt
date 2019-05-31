@@ -48,19 +48,34 @@ class AddGrocery extends Component {
         const {item, store, unit_price, unit} = this.state;
 
         if(item && store && unit_price && unit) {
-            this.props.addGrocery({...this.state});
-
-            this.setState({
-                item: '',
-                store: '',
-                unit_price: '',
-                unit: ''
-            }, () => M.FormSelect.init(this.unit));
+            this.props.addGrocery({
+                item,
+                store,
+                unit_price,
+                unit
+            });
+            this.resetInputs();
         } else {
             this.setState({
                 error: 'Please select a unit'
             });
         }
+    }
+
+    resetInputs(){
+        this.setState({
+            item: '',
+            store: '',
+            unit_price: '',
+            unit: '',
+            error: '',
+            touched: {
+                item: false,
+                store: false,
+                unit_price: false,
+                unit: false
+            }
+        }, () => M.FormSelect.init(this.unit));
     }
 
     componentDidMount() {

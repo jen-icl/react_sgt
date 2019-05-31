@@ -30,7 +30,7 @@ class App extends Component{
             const resp = await axios.get('/api/groceries');
             const {success, error, data} = resp.data;
 
-            if(success){
+            if(success) {
                 this.setState({
                     groceries: data
                 });
@@ -50,7 +50,7 @@ class App extends Component{
             const resp = await axios.post('/api/groceries', grocery);
             const {success, error} = resp.data;
 
-            if(success){
+            if(success) {
                 this.getGroceryData();
             } else {
                 throw(error);
@@ -75,7 +75,7 @@ class App extends Component{
             const resp = await axios.put('/api/groceries', grocery);
             const {success, error} = resp.data;
 
-            if(success){
+            if(success) {
                 this.getGroceryData();
             } else {
                 throw(error);
@@ -97,7 +97,7 @@ class App extends Component{
             });
             const {success, error} = resp.data;
 
-            if(success){
+            if(success) {
                 this.getGroceryData();
             } else {
                 throw(error);
@@ -114,7 +114,7 @@ class App extends Component{
             const resp = await axios.delete(`/api/groceries/${id}`);
             const {success, error} = resp.data;
 
-            if(success){
+            if(success) {
                 this.getGroceryData();
             } else {
                 throw(error);
