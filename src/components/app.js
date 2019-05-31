@@ -14,7 +14,7 @@ class App extends Component{
         this.state = {
             groceries: [],
             updateGroceryData: {},
-            modal: false,
+            modalOpen: false,
             error: ''
         }
 
@@ -52,7 +52,7 @@ class App extends Component{
 
     updateModal(grocery){
         this.setState({
-            modal: !this.state.modal,
+            modalOpen: !this.state.modalOpen,
             updateGroceryData: grocery || {}
         });
     }
@@ -101,7 +101,7 @@ class App extends Component{
     }
 
     render(){
-        const {modal, updateGroceryData} = this.state;
+        const {modalOpen, updateGroceryData} = this.state;
 
         return (
             <div>
@@ -111,7 +111,7 @@ class App extends Component{
                     <GroceryTable col="s12 l9" deleteGrocery={this.deleteGrocery} updateCheckbox={this.updateCheckbox} updateModal={this.updateModal} list={this.state.groceries} />
                     <AddGrocery col="s12 l3" addGrocery={this.addGrocery} />
                 </div>
-                {modal ? <UpdateGrocery updateGroceryData={updateGroceryData} updateGrocery={this.updateGrocery} updateModal={this.updateModal} /> : null}
+                {modalOpen ? <UpdateGrocery updateGroceryData={updateGroceryData} updateGrocery={this.updateGrocery} updateModal={this.updateModal} /> : null}
             </div>
         );
     }

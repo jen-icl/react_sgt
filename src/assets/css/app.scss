@@ -10,6 +10,10 @@ body {
     &:hover {
         background-color:rgb(49, 57, 61);
     }
+
+    &:focus {
+        background-color:rgb(23, 27, 29);
+    }
 }
 
 .tangerineBtn {
@@ -17,7 +21,11 @@ body {
     margin-left: 5px;
 
     &:hover {
-        background-color: rgb(228, 99, 59);
+        background-color: rgb(226, 97, 58);
+    }
+
+    &:focus {
+        background-color: rgb(173, 68, 36);
     }
 }
 
@@ -99,6 +107,10 @@ input[type=text]:not(.browser-default), input[type=number]:not(.browser-default)
 
 .dropdown-content li > span {
     color: rgb(255, 112, 67);
+}
+
+.errorInput {
+    margin: 0;
 }
 
 @media (max-width: 768px) {
