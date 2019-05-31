@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import GroceryRow from './grocery_row';
 
 class GroceryTable extends Component {
-    render(){
+    render() {
         const {col = 's12', list, deleteGrocery, updateCheckbox, updateModal} = this.props;
         const groceryElements = list.map(grocery => {
             return <GroceryRow deleteGrocery={deleteGrocery} updateCheckbox={updateCheckbox} updateModal={updateModal} key={grocery.id} {...grocery} />
         });
+
         return (
             <div className={`grocery-table col ${col}`}>
                 <table>

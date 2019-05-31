@@ -2,7 +2,7 @@ import React from 'react';
 
  const GroceryRow = props => {
     const {id, item, store, unit_price, unit, completed, deleteGrocery, updateCheckbox, updateModal} = props;
-     const checkboxStatus = completed ?
+    const checkboxStatus = completed ?
         <label className="checkbox">
              <input type="checkbox" className="filled-in" onChange={() => updateCheckbox(id, completed)} defaultChecked/>
             <span></span>

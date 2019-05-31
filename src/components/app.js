@@ -8,7 +8,7 @@ import AddGrocery from './add_grocery';
 import UpdateGrocery from './update_grocery';
 
 class App extends Component{
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -16,7 +16,7 @@ class App extends Component{
             updateGroceryData: {},
             modalOpen: false,
             error: ''
-        }
+        };
 
         this.addGrocery = this.addGrocery.bind(this);
         this.updateModal = this.updateModal.bind(this);
@@ -38,7 +38,7 @@ class App extends Component{
         }
     }
 
-    async addGrocery(grocery){
+    async addGrocery(grocery) {
         grocery.unit_price = parseFloat(grocery.unit_price).toFixed(2) * 100;
         try {
             await axios.post('/api/groceries', grocery);
@@ -50,26 +50,26 @@ class App extends Component{
         }
     }
 
-    updateModal(grocery){
+    updateModal(grocery) {
         this.setState({
             modalOpen: !this.state.modalOpen,
             updateGroceryData: grocery || {}
         });
     }
 
-    async updateGrocery(grocery){
+    async updateGrocery(grocery) {
         grocery.unit_price = parseFloat(grocery.unit_price).toFixed(2) * 100;
         try {
             await axios.put('/api/groceries', grocery);
             this.getGroceryData();
-        } catch(err) {
+        } catch(err){
             this.setState({
                 error: 'Unable to update Grocery Item'
             });
         }
     }
 
-    async updateCheckbox(id, completed){
+    async updateCheckbox(id, completed) {
         completed = completed ? 0 : 1;
 
         try {
@@ -78,14 +78,14 @@ class App extends Component{
                 completed
             });
             this.getGroceryData();
-        } catch(err) {
+        } catch(err){
             this.setState({
                 error: 'Unable to update Checkbox'
             });
         }
     }
 
-    async deleteGrocery(id){
+    async deleteGrocery(id) {
         try {
             await axios.delete(`/api/groceries/${id}`);
             this.getGroceryData();
@@ -96,11 +96,11 @@ class App extends Component{
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getGroceryData();
     }
 
-    render(){
+    render() {
         const {modalOpen, updateGroceryData} = this.state;
 
         return (

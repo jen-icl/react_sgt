@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Modal from './modal';
 
 class UpdateGrocery extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -16,9 +16,9 @@ class UpdateGrocery extends Component {
                 item: false,
                 store: false,
                 unit_price: false,
-                unit: false,
+                unit: false
             }
-        }
+        };
 
         this.handleBlur = this.handleBlur.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,7 +34,7 @@ class UpdateGrocery extends Component {
                 ...touched,
                 [name]: true
             }
-        })
+        });
     }
 
     handleInputChange(event) {
@@ -50,7 +50,9 @@ class UpdateGrocery extends Component {
         const {item, store, unit_price, unit} = this.state;
 
         if(item && store && unit_price && unit) {
-            this.props.updateGrocery({...this.state});
+            this.props.updateGrocery({
+                ...this.state
+            });
         } else {
             this.setState({
                 error: 'Please input all fields'
@@ -71,7 +73,7 @@ class UpdateGrocery extends Component {
     }
 
     render() {
-        const {col = "s12", updateModal, modalOpen} = this.props
+        const {col = "s12", updateModal} = this.props;
         const {item, store, unit_price, unit, error, touched} = this.state;
         const enableButton = !!item && !!store && !!unit_price && !!unit;
 
@@ -113,7 +115,7 @@ class UpdateGrocery extends Component {
                             </select>
                             <label className="active" htmlFor="unit"></label>
                         </div>
-                        <p className="errorInput red-text text-darken-2">{error}</p>
+                        {error ? <p className="errorInput red-text text-darken-2">{error}</p> : null}
                         {enableButton ? <button className="btn grayBtn modal-close">Update</button> : <button disabled className="btn grayBtn modal-close">Update</button>}
                     </form>
                 </div>

@@ -182,6 +182,6 @@ server.delete('/api/groceries/:grocery_id', (req, res) => {
     });
 });
 
-server.listen(PORT, ()=>{
+server.listen(PORT, () => {
     console.log('carrier has arrived on port', PORT);
 });
