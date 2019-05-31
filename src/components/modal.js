@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 
 class Modal extends Component {
-    componentDidMount(){
+    componentDidMount() {
         const {updateModal} = this.props;
         const options = {
             onCloseEnd: () => {
                 updateModal();
             }
         }
+
         M.Modal.init(this.Modal, options);
         let instance = M.Modal.getInstance(this.Modal);
         instance.open();

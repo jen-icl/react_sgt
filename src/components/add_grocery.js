@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class AddGrocery extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -16,7 +16,7 @@ class AddGrocery extends Component {
                 unit_price: false,
                 unit: false
             }
-        }
+        };
 
         this.handleBlur = this.handleBlur.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -43,7 +43,7 @@ class AddGrocery extends Component {
         });
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault();
         const {item, store, unit_price, unit} = this.state;
 
@@ -63,13 +63,14 @@ class AddGrocery extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         M.FormSelect.init(this.unit);
     }
 
-    render(){
+    render() {
         const {col = "s12"} = this.props
         const {item, store, unit_price, unit, error, touched} = this.state;
+
         return (
             <div className={`col ${col}`}>
                 <form onSubmit={this.handleSubmit}>
@@ -114,7 +115,5 @@ class AddGrocery extends Component {
         );
     }
 }
-
-
 
 export default AddGrocery;
