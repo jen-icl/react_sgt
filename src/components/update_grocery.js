@@ -47,11 +47,15 @@ class UpdateGrocery extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const {item, store, unit_price, unit} = this.state;
+        const {id, item, store, unit_price, unit} = this.state;
 
         if(item && store && unit_price && unit) {
             this.props.updateGrocery({
-                ...this.state
+                id,
+                item,
+                store,
+                unit_price,
+                unit
             });
         } else {
             this.setState({
@@ -68,7 +72,14 @@ class UpdateGrocery extends Component {
             item,
             store,
             unit_price: (unit_price/100).toFixed(2),
-            unit
+            unit,
+            error: '',
+            touched: {
+                item: false,
+                store: false,
+                unit_price: false,
+                unit: false
+            }
         }, () => M.FormSelect.init(this.unit));
     }
 
