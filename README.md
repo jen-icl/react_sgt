@@ -1,5 +1,5 @@
 # Grocery List
-<a href="#" target="_blank">Click to Visit Live Site</a>
+<a href="https://grocerylist.jen-icl.com/" target="_blank">Click to visit Live Site</a>
 <br>A content management system(CMS) designed for grocery shoppers to keep a list of his/her groceries through CRUD operations
 
 ### App Features
