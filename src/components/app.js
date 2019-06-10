@@ -16,8 +16,8 @@ class App extends Component{
             groceries: [],
             updateGroceryData: {},
             updateModal: false,
-            deleteItemId: '',
-            deleteModla: false,
+            deleteGroceryData: {},
+            deleteModal: false,
             error: ''
         };
 
@@ -35,9 +35,18 @@ class App extends Component{
             const {success, error, data} = resp.data;
 
             if(success) {
-                this.setState({
-                    groceries: data
-                });
+                if(data.length > 0){
+                    this.setState({
+                        groceries: data
+                    });
+                } else {
+                    this.setState({
+                        groceries: [{
+                            id: 0,
+                            item: 'PLEASE ADD A GROCERY ITEM'
+                        }]
+                    });
+                }
             } else {
                 throw(error);
             }
@@ -113,10 +122,10 @@ class App extends Component{
         }
     }
 
-    deleteModal(id) {
+    deleteModal(grocery) {
         this.setState({
             deleteModal: !this.state.deleteModal,
-            deleteItemId: id || ''
+            deleteGroceryData: grocery || {}
         });
     }
 
@@ -142,7 +151,7 @@ class App extends Component{
     }
 
     render() {
-        const {updateModal, updateGroceryData, deleteModal, deleteItemId} = this.state;
+        const {updateModal, updateGroceryData, deleteModal, deleteGroceryData} = this.state;
 
         return (
             <div>
@@ -153,7 +162,7 @@ class App extends Component{
                     <AddGrocery col="s12 l3" addGrocery={this.addGrocery} />
                 </div>
                 {updateModal ? <UpdateGrocery updateGroceryData={updateGroceryData} updateGrocery={this.updateGrocery} updateModal={this.updateModal} /> : null}
-                {deleteModal ? <DeleteGrocery deleteItemId={deleteItemId} deleteGrocery={this.deleteGrocery} deleteModal={this.deleteModal} /> : null}
+                {deleteModal ? <DeleteGrocery deleteGroceryData={deleteGroceryData} deleteGrocery={this.deleteGrocery} deleteModal={this.deleteModal} /> : null}
             </div>
         );
     }

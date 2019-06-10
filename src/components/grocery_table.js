@@ -13,7 +13,7 @@ class GroceryTable extends Component {
                 <table>
                     <thead>
                         <tr className="deep-orange lighten-3 grey-text text-darken-2">
-                            <th>Check</th>
+                            <th>Bought?</th>
                             <th>Grocery Item</th>
                             <th>Store</th>
                             <th>Unit Price</th>
