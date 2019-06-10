@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const mysqlcredentials = require('./mysqlcreds.js');
+mysqlcredentials.multipleStatements = true;
+const cron = require('node-cron');
 const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 
@@ -26,7 +28,7 @@ const reconnect = db => {
 }
 
 db.getConnection((err, connection) => {
-    if (err) {
+    if(err) {
         console.error('Cannot establish a connection with the database');
         db = reconnect(db);
     } else {
@@ -36,23 +38,40 @@ db.getConnection((err, connection) => {
 });
 
 db.on('error', err => {
-    if (err.code === "PROTOCOL_CONNECTION_LOST") {
+    if(err.code === "PROTOCOL_CONNECTION_LOST") {
         console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
-    }else if (err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
+    } else if(err.code === "PROTOCOL_ENQUEUE_AFTER_QUIT") {
         console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
-    }else if (err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
+    } else if(err.code === "PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR") {
         console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
-    }else if (err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
+    } else if(err.code === "PROTOCOL_ENQUEUE_HANDSHAKE_TWICE") {
         console.error('Cannot establish a connection with the database (' + err.code + ')');
-    }else {
+    } else {
         console.error('Cannot establish a connection with the database (' + err.code + ')');
         return reconnect(db);
     }
 });
 
+const cronNewTable = cron.schedule('0 * * * *', () => {
+    const query = 'CREATE TABLE `grocery_new` LIKE `grocery`; RENAME TABLE `grocery` TO `grocery_old`, `grocery_new` TO `grocery`; INSERT INTO `grocery` (`id`, `completed`, `item`, `store`, `unit_price`, `unit`, `added`) VALUES (1, 1, "Strawberries", "Ralph\'s", 125, "/lb", "2019-05-21 16:16:38"), (2, 0, "Cauliflower (Avg. 2lbs)", "Sprouts", 149, "/lb", "2019-05-21 16:20:38"), (3, 1, "Peach Yellow Whole Trade Guarantee Organic", "Whole Foods", 399, "/lb", "2019-05-21 16:39:10"), (4, 1, "Strawberries", "Albertsons", 249, "/pk", "2019-05-21 16:39:50"), (5, 0, "Chobani Fat Free Peach Greek Style Yogurt, 5.3 OZ", "Sprouts", 110, "/g", "2019-05-21 16:40:20"), (6, 1, "Silk Unsweetened Pure Almond Milk", "Ralph\'s", 674, "/gal", "2019-05-21 16:40:56")';
+    db.query(query, error => {
+        console.error('Cron create table error', error);
+    });
+});
+
+cronNewTable.start();
+
+const cronDropOldTable = cron.schedule('10 * * * *', () => {
+    const dropOldTableQuery = "DROP TABLE IF EXISTS `grocery_old`";
+    db.query(dropOldTableQuery, error => {
+        console.error('Cron drop table error', error);
+    });
+});
+
+cronDropOldTable.start();
 
 server.get('/api/groceries', (req, res) => {
     const query = 'SELECT * FROM `grocery`';

@@ -6,6 +6,7 @@ import axios from 'axios';
 import GroceryTable from './grocery_table';
 import AddGrocery from './add_grocery';
 import UpdateGrocery from './update_grocery';
+import DeleteGrocery from './delete_grocery';
 
 class App extends Component{
     constructor(props) {
@@ -14,7 +15,9 @@ class App extends Component{
         this.state = {
             groceries: [],
             updateGroceryData: {},
-            modalOpen: false,
+            updateModal: false,
+            deleteItemId: '',
+            deleteModla: false,
             error: ''
         };
 
@@ -22,6 +25,7 @@ class App extends Component{
         this.updateModal = this.updateModal.bind(this);
         this.updateGrocery = this.updateGrocery.bind(this);
         this.updateCheckbox = this.updateCheckbox.bind(this);
+        this.deleteModal = this.deleteModal.bind(this);
         this.deleteGrocery = this.deleteGrocery.bind(this);
     }
 
@@ -64,7 +68,7 @@ class App extends Component{
 
     updateModal(grocery) {
         this.setState({
-            modalOpen: !this.state.modalOpen,
+            updateModal: !this.state.updateModal,
             updateGroceryData: grocery || {}
         });
     }
@@ -109,6 +113,13 @@ class App extends Component{
         }
     }
 
+    deleteModal(id) {
+        this.setState({
+            deleteModal: !this.state.deleteModal,
+            deleteItemId: id || ''
+        });
+    }
+
     async deleteGrocery(id) {
         try {
             const resp = await axios.delete(`/api/groceries/${id}`);
@@ -131,17 +142,18 @@ class App extends Component{
     }
 
     render() {
-        const {modalOpen, updateGroceryData} = this.state;
+        const {updateModal, updateGroceryData, deleteModal, deleteItemId} = this.state;
 
         return (
             <div>
                 <h1 className="center">Grocery List</h1>
                 <h5 className="red-text text-darken-2">{this.state.error}</h5>
                 <div className="row">
-                    <GroceryTable col="s12 l9" deleteGrocery={this.deleteGrocery} updateCheckbox={this.updateCheckbox} updateModal={this.updateModal} list={this.state.groceries} />
+                    <GroceryTable col="s12 l9" deleteModal={this.deleteModal} updateCheckbox={this.updateCheckbox} updateModal={this.updateModal} list={this.state.groceries} />
                     <AddGrocery col="s12 l3" addGrocery={this.addGrocery} />
                 </div>
-                {modalOpen ? <UpdateGrocery updateGroceryData={updateGroceryData} updateGrocery={this.updateGrocery} updateModal={this.updateModal} /> : null}
+                {updateModal ? <UpdateGrocery updateGroceryData={updateGroceryData} updateGrocery={this.updateGrocery} updateModal={this.updateModal} /> : null}
+                {deleteModal ? <DeleteGrocery deleteItemId={deleteItemId} deleteGrocery={this.deleteGrocery} deleteModal={this.deleteModal} /> : null}
             </div>
         );
     }
