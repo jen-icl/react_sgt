@@ -6,7 +6,6 @@ body {
 
 .grayBtn {
     background-color:rgb(71, 82, 87);
-    margin: 5px 0 0 5px;
 
     &:hover {
         background-color:rgb(49, 57, 61);
@@ -19,7 +18,6 @@ body {
 
 .tangerineBtn {
     background-color: rgb(255, 112, 67);
-    margin: 5px 0 0 5px;
 
     &:hover {
         background-color: rgb(226, 97, 58);
@@ -38,51 +36,57 @@ h1 {
 
 .grocery-table {
     margin-bottom: 1.5rem;
-}
 
-tr {
-    border-bottom: 1px solid rgba(117, 117, 117, 0.1);
-}
+    table {
+        tr {
+            border-bottom: 1px solid rgba(117, 117, 117, 0.1);
 
-thead tr {
-    text-transform: uppercase;
+            button {
+                margin: 5px 0 0 5px;
+            }
+        }
 
-    th:nth-child(4) {
-        text-align: right;
-    }
-}
+        thead tr {
+            text-transform: uppercase;
 
-tbody tr {
-    &:nth-child(even) {
-        background-color: rgba(251, 233, 231, 0.3);
-    }
+            th:nth-child(4) {
+                text-align: right;
+            }
+        }
 
-    &:hover {
-        background-color: rgb(251, 233, 231);
-    }
+        tbody tr {
+            &:nth-child(even) {
+                background-color: rgba(251, 233, 231, 0.3);
+            }
 
-    td:nth-child(4) {
-        text-align: right;
-    }
+            &:hover {
+                background-color: rgb(251, 233, 231);
+            }
 
-    &:not(td:nth-child(5)){
-        text-transform: capitalize;
-    }
-}
+            td:nth-child(4) {
+                text-align: right;
+            }
 
-label.checkbox {
-    position: relative;
-    top: 7px;
-}
+            &:not(td:nth-child(5)){
+                text-transform: capitalize;
+            }
+        }
 
-[type="checkbox"].filled-in {
-    &:checked + span:not(.lever):after {
-        border: 2px solid rgb(255, 112, 67);
-        background-color: rgb(255, 112, 67);
-    }
+        label.checkbox {
+            position: relative;
+            top: 7px;
+        }
 
-    &:not(:checked) + span:not(.lever):after {
-        border: 2px solid rgb(117, 117, 117);
+        [type="checkbox"].filled-in {
+            &:checked + span:not(.lever):after {
+                border: 2px solid rgb(255, 112, 67);
+                background-color: rgb(255, 112, 67);
+            }
+
+            &:not(:checked) + span:not(.lever):after {
+                border: 2px solid rgb(117, 117, 117);
+            }
+        }
     }
 }
 
@@ -130,9 +134,17 @@ input[type=text]:not(.browser-default), input[type=number]:not(.browser-default)
     margin: 0;
 }
 
-@media (max-width: 768px) {
+.modalButton {
+    margin-top: 1rem;
+
+    button:first-child {
+        margin-right: 5px;
+    }
+}
+
+@media (max-width: 1024px) {
     .grocery-table {
-        overflow-x: scroll;
+        overflow-x: auto;
     }
 
     table {

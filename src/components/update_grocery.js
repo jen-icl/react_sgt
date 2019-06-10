@@ -136,7 +136,10 @@ class UpdateGrocery extends Component {
                             <label className="active" htmlFor="unit"></label>
                         </div>
                         {error ? <p className="errorInput red-text text-darken-2">{error}</p> : null}
-                        {enableButton ? <button className="btn grayBtn modal-close">Update</button> : <button disabled className="btn grayBtn modal-close">Update</button>}
+                        <div className="center modalButton">
+                            {enableButton ? <button className="btn grayBtn modal-close">Update</button> : <button disabled className="btn grayBtn modal-close">Update</button>}
+                            <button className="btn tangerineBtn modal-close">Cancel</button>
+                        </div>
                     </form>
                 </div>
             </Modal>
