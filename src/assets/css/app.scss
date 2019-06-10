@@ -6,6 +6,7 @@ body {
 
 .grayBtn {
     background-color:rgb(71, 82, 87);
+    margin: 5px 0 0 5px;
 
     &:hover {
         background-color:rgb(49, 57, 61);
@@ -18,7 +19,7 @@ body {
 
 .tangerineBtn {
     background-color: rgb(255, 112, 67);
-    margin-left: 5px;
+    margin: 5px 0 0 5px;
 
     &:hover {
         background-color: rgb(226, 97, 58);
@@ -45,17 +46,27 @@ tr {
 
 thead tr {
     text-transform: uppercase;
+
+    th:nth-child(4) {
+        text-align: right;
+    }
 }
 
 tbody tr {
-    text-transform: capitalize;
-
     &:nth-child(even) {
         background-color: rgba(251, 233, 231, 0.3);
     }
 
     &:hover {
         background-color: rgb(251, 233, 231);
+    }
+
+    td:nth-child(4) {
+        text-align: right;
+    }
+
+    &:not(td:nth-child(5)){
+        text-transform: capitalize;
     }
 }
 
@@ -125,6 +136,6 @@ input[type=text]:not(.browser-default), input[type=number]:not(.browser-default)
     }
 
     table {
-        min-width: 730px;
+        min-width: 750px;
     }
 }

@@ -2,10 +2,21 @@ import React, {Component} from 'react';
 
 class Modal extends Component {
     componentDidMount() {
-        const {updateModal} = this.props;
-        const options = {
-            onCloseEnd: () => {
-                updateModal();
+        let options = {};
+        const {updateModal, deleteModal} = this.props;
+        if(updateModal){
+            options = {
+                onCloseEnd: () => {
+                    updateModal();
+                }
+            }
+        }
+
+        if(deleteModal){
+            options = {
+                onCloseEnd: () => {
+                    deleteModal();
+                }
             }
         }
 
@@ -18,7 +29,7 @@ class Modal extends Component {
         const {children} = this.props;
 
         return(
-            <div id="updateModal" className="modal" ref={Modal => this.Modal = Modal}>
+            <div id="modalpopup" className="modal" ref={Modal => this.Modal = Modal}>
                 <div className="modal-content">
                     {children}
                 </div>
