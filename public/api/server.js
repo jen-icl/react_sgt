@@ -74,13 +74,13 @@ const cronDropOldTable = cron.schedule('10 * * * *', () => {
 cronDropOldTable.start();
 
 server.get('/api/groceries', (req, res) => {
+    const output = {
+        success: false
+    };
+
     const query = 'SELECT * FROM `grocery`';
 
     db.query(query, (error, result) => {
-        const output = {
-            success: false
-        };
-
         if(!error){
             output.success = true;
             output.data = result;
@@ -110,6 +110,25 @@ server.post('/api/groceries', (req, res) => {
         if(!error){
             output.success = true;
             output.new_id = result.insertId;
+        } else {
+            output.error = error;
+        }
+
+        res.send(output);
+    });
+});
+
+server.post('api/sort', (req, res) => {
+    const {type = id} = req.body;
+    const output = {
+        success: false
+    };
+
+    const query = 'SELECT * FROM `grocery` ORDER BY `' + type + '`';
+    db.query(query, (error, result) => {
+        if(!error){
+            output.success = true;
+            output.data = result;
         } else {
             output.error = error;
         }
