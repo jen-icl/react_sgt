@@ -119,12 +119,12 @@ server.post('/api/groceries', (req, res) => {
 });
 
 server.post('api/sort', (req, res) => {
-    const {type = id} = req.body;
+    const {type = id, order = ASC} = req.body;
     const output = {
         success: false
     };
 
-    const query = 'SELECT * FROM `grocery` ORDER BY `' + type + '`';
+    const query = 'SELECT * FROM `grocery` ORDER BY `' + type + ' ' + order + '`';
     db.query(query, (error, result) => {
         if(!error){
             output.success = true;
